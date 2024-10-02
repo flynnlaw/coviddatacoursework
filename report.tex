@@ -1,0 +1,311 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{longtable}
+\usepackage{ amssymb }
+\usepackage{verbatim}
+\usepackage{listings}
+
+\title{COMP1204 Coursework 2}
+\author{Flynn Law}
+\date{May 2024}
+
+\usepackage[margin=1in]{geometry}
+\begin{document}
+\newpage
+
+\maketitle
+
+\section{Relational Model}
+\subsection{EX1}
+\begin{longtable}{|c|c|}
+\hline
+\textbf{Attribute} & \textbf{Type} \\
+\hline
+dateRep & TEXT \\
+day & INTEGER \\
+month & INTEGER \\
+year & INTEGER \\
+cases & INTEGER \\
+deaths & INTEGER \\
+countriesAndTerritories & TEXT \\
+geoId & TEXT \\
+countryterritoryCode & TEXT \\
+popData2020 & INTEGER \\
+continentExp & TEXT \\
+\hline
+\end{longtable}
+\subsection{EX2}
+\begin{enumerate}
+    \item \textbf{\fontsize{11}{13}\selectfont dateRep $\rightarrow$ day, month, year} \\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont countriesAndTerritories $\rightarrow$ geoId} \\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont countriesAndTerritories $\rightarrow$ countryterritoryCode} \\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont countriesAndTerritories $\rightarrow$ popData2020} \\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont countriesAndTerritories $\rightarrow$ continentExp} \\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont dateRep, geoId $\rightarrow$ cases }\\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont dateRep, geoId $\rightarrow$ deaths }\\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont geoId $\rightarrow$ countriesAndTerritories }\\
+    \vspace{-\baselineskip}
+    \item \textbf{\fontsize{11}{13}\selectfont countryterritoryCode $\rightarrow$ countriesAndTerritories }\\
+    \vspace{-\baselineskip}
+\end{enumerate}
+\subsection{EX3}
+\footnotesize{Note: continentExp is assumed as data originates from the EU Open Data Portal, which only includes information regarding COVID-19 in EU/EEA countries.}
+\begin{enumerate}
+\item \textbf{\fontsize{11}{13}\selectfont dateRep, geoId}
+\item \textbf{\fontsize{11}{13}\selectfont dateRep, countryterritoryCode}
+\item \textbf{\fontsize{11}{13}\selectfont dateRep, cases, deaths}
+\item \textbf{\fontsize{11}{13}\selectfont dateRep, countriesAndTerritories}
+\item \textbf{\fontsize{11}{13}\selectfont day, month, year, geoId}
+\item \textbf{\fontsize{11}{13}\selectfont day, month, year, countryterritoryCode}
+\item \textbf{\fontsize{11}{13}\selectfont day, month, year, cases, deaths}
+\item \textbf{\fontsize{11}{13}\selectfont day, month, year, countriesAndTerritories}
+\end{enumerate}
+\subsection{EX4}
+\textbf{Primary Key selected: }
+\textbf{\fontsize{11}{13}\selectfont dateRep, countryterritoryCode} \\
+\footnotesize{This is because the dateRep and countryterritoryCode format is suitable for searching through data clearly, as they are clearly defined formats. (dd/mm/yyyy and XX respectively). Additonally, the country code format is widely known which makes it suitable for searching}
+
+\section{Normalisation}
+\subsection{EX5}
+{\fontsize{11}{13}\selectfont dateRep $\rightarrow$ day, month year but}\\
+{\fontsize{11}{13}\selectfont geoId $\nrightarrow$ day, month, year }\\
+
+\subsection{EX6}
+In 2nd Normal Form, the relation would be split as follows:
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{dateRep}& \textbf{countryterritoryCode} & \textbf{cases} & \textbf{deaths}\\
+\hline
+\end{longtable}
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{dateRep} & \textbf{day} & \textbf{month}& \textbf{year}\\
+\hline
+\end{longtable}
+\begin{longtable}{|c|c|c|c|c|}
+\hline
+\textbf{countryterritoryCode} & \textbf{countriesAndTerritories} & \textbf{geoID} & \textbf{popData2020} & \textbf{continentExp}\\
+\hline
+\end{longtable}
+This is because day, month and year do not determine the countryterritoryCode, so must be apart of a different relation.
+Furthermore, countriesAndTerritories, geoId, popData2020 and continentExp do not determine the dateRep
+Finally, cases and deaths rely both on geoId and countryterritoryCode, therefore must be moved to a different relation.
+
+\subsection{EX7}
+{\fontsize{11}{13}\selectfont geoId $\rightarrow$ countriesAndTerritories }\\
+{\fontsize{11}{13}\selectfont geoId $\rightarrow$ popData2020 }\\
+{\fontsize{11}{13}\selectfont geoId $\rightarrow$ continentExp }\\
+{\fontsize{11}{13}\selectfont countriesAndTerritories $\rightarrow$ geoID }\\
+{\fontsize{11}{13}\selectfont countriesAndTerritories $\rightarrow$ popData2020 }\\
+{\fontsize{11}{13}\selectfont countriesAndTerritories $\rightarrow$ continentExp }\\
+
+\newpage
+\subsection{EX8}
+In 3rd Normal Form, the relation would be as follows:
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{dateRep}& \textbf{countryterritoryCode} & \textbf{cases} & \textbf{deaths}\\
+\hline
+\end{longtable}
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{dateRep} & \textbf{day} & \textbf{month}& \textbf{year}\\
+\hline
+\end{longtable}
+\begin{longtable}{|c|c|}
+\hline
+\textbf{countryterritoryCode} & \textbf{geoID}\\
+\hline
+\end{longtable}
+\begin{longtable}{|c|c|}
+\hline
+\textbf{geoID} & \textbf{countriesAndTerritories}\\
+\hline
+\end{longtable}
+\begin{longtable}{|c|c|c|}
+\hline
+\textbf{countriesAndTerritories} & \textbf{popData2020} & \textbf{continentExp}\\
+\hline
+\end{longtable}
+
+This is because of the transitive dependencies expressed in \textbf{EX7}. Therefore, the attributes have been placed in new tables, where there are no new non-key attributes that determine other ones. 
+
+\subsection{EX9}
+The relations are already in Boyce-Codd Normal Form as day, month and year rely fully on dateRep, as do cases and deaths fully relying on the key dateRep, countryterritoryCode. Furthermore, in the relations countriesAndTerritories \rightarrow popData2020 and countriesAndTerritories \rightarrow continentExp, countriesAndTerritories is a superkey.
+\\
+
+\section{Modelling}
+
+\subsection{EX10}
+1. Run sqlite3 in terminal (or run in DataGrip)\\
+2. Run \texttt{.mode csv} to switch to csv import \\
+3. Run \texttt{.import dataset.csv dataset} to import the dataset file into a table called dataset \\
+4. Run \texttt{.output dataset.sql} to set the output file
+5. Run \texttt{.dump} to dump the contents of the sql file into the working directory
+6. Run the created \texttt{.sql} file with a blank database to populate the databases with the tables and data.
+
+\subsection{EX11}
+Create tables that correspond to the BCNF relation detailed in \textbf{EX8}, with primary and foreign keys for each table. 
+\begin{verbatim}
+
+CREATE TABLE IF NOT EXISTS DATES(
+    dateRep TEXT NOT NULL UNIQUE,
+    day TEXT NOT NULL,
+    month TEXT NOT NULL,
+    year TEXT NOT NULL,
+    PRIMARY KEY(dateRep)
+);
+
+CREATE TABLE IF NOT EXISTS COUNTRYIDS(
+    countryterritoryCode TEXT NOT NULL UNIQUE,
+    geoID TEXT NOT NULL UNIQUE,
+    PRIMARY KEY(countryterritoryCode),
+    FOREIGN KEY(geoID) REFERENCES COUNTRYNAMES(geoID)
+);
+CREATE TABLE IF NOT EXISTS COUNTRYNAMES(
+    geoID TEXT NOT NULL UNIQUE,
+    countriesAndTerritories TEXT NOT NULL UNIQUE,
+    PRIMARY KEY(geoID),
+    FOREIGN KEY (countriesAndTerritories) REFERENCES POPULATION(countriesAndTerritories)
+);
+CREATE TABLE IF NOT EXISTS POPULATION(
+    countriesAndTerritories TEXT NOT NULL UNIQUE,
+    popData2020 TEXT NOT NULL,
+    continentEXP TEXT NOT NULL,
+    PRIMARY KEY(countriesAndTerritories)
+);
+
+CREATE TABLE IF NOT EXISTS COVID19CASESANDDEATHS(
+    dateRep TEXT NOT NULL,
+    countryterritoryCode TEXT NOT NULL,
+    cases TEXT NOT NULL,
+    deaths TEXT NOT NULL,
+    PRIMARY KEY(dateRep, countryterritoryCode),
+    FOREIGN KEY (dateRep) REFERENCES DATES(dateRep),
+    FOREIGN KEY (countryterritoryCode) REFERENCES COUNTRYIDS(countryterritoryCode)
+);
+\end{verbatim}
+
+The primary key of the dates table is the dateRep attribute, and the primary key of the countries table is the countryterritoryCode. The tables are the same as detailed in \textbf{EX6}. 
+The cases and deaths table has the dateRep and countryterritoryCode as foreign keys, linking this table with the other two tables. 
+
+\subsection{EX12}
+From the dataset table (where the imported dataset is stored) populate all the tables created with appropriate data. If data is already entered, ignore (such as multiple dates in the DATES table). Compile all the data from the other tables into the final table, COVID19CASESANDDEATHS, by using inner joins to select data from other tables. 
+\begin{verbatim}
+INSERT OR IGNORE INTO DATES(dateRep, day, month, year) 
+SELECT DISTINCT dateRep, day, month, year 
+FROM dataset;
+INSERT OR IGNORE INTO COUNTRYIDS 
+SELECT DISTINCT countryterritoryCode, geoId 
+FROM dataset;
+INSERT OR IGNORE INTO COUNTRYNAMES 
+SELECT DISTINCT geoId, countriesAndTerritories 
+FROM dataset;
+INSERT OR IGNORE INTO POPULATION 
+SELECT DISTINCT countriesAndTerritories, popData2020,continentExp 
+FROM dataset;
+INSERT INTO COVID19CASESANDDEATHS (dateRep, countryterritoryCode, cases, deaths)
+SELECT dt.dateRep, c.countryterritoryCode, d.cases, d.deaths 
+FROM dataset AS d 
+INNER JOIN DATES AS dt ON d.dateRep = dt.dateRep 
+INNER JOIN COUNTRYIDS AS c ON d.countryterritoryCode = c.countryterritoryCode;
+\end{verbatim}
+
+\subsection{EX13}
+Running the following code: 
+\begin{verbatim}
+    sqlite3 coronavirus.db < dataset.sql
+    sqlite3 coronavirus.db < ex11.sql
+    sqlite3 coronavirus.db < ex12.sql
+\end{verbatim}
+generates a fully populated database.
+
+
+\section{Querying}
+\subsection{EX14}
+Add all the cases, and add all the deaths and present them.
+\begin{verbatim}
+SELECT SUM(CAST(cases AS INTEGER)) as total_cases, SUM(CAST(deaths AS INTEGER)) as total_deaths 
+FROM COVID19CASESANDDEATHS;
+\end{verbatim}
+
+\subsection{EX15}
+Present the dates (in dd/mm/yyyy format), cases and country names (will only be UK cases) and order them to present in order. Full country names (from the COUNTRYNAMES table) will be presented instead of the code stored in the table. 
+\begin{verbatim}
+SELECT COVID19CASESANDDEATHS.dateRep, cases, countriesAndTerritories AS country FROM COVID19CASESANDDEATHS
+INNER JOIN COUNTRYIDS ON COVID19CASESANDDEATHS.countryterritoryCode = COUNTRYIDS.countryterritoryCode
+INNER JOIN COUNTRYNAMES ON COUNTRYIDS.geoID = COUNTRYNAMES.geoID
+INNER JOIN DATES ON COVID19CASESANDDEATHS.dateRep = DATES.dateRep
+WHERE countriesAndTerritories = 'United_Kingdom'
+ORDER BY year, month, day;
+\end{verbatim}
+
+\subsection{EX16}
+Ordered by date, presents the cases and deaths for every country on a particular day. 
+The date is in the wrong format for comparison, orders by converting the date into the yyyy/mm/dd form by using a substring function. 
+\begin{verbatim}
+SELECT
+    COUNTRYNAMES.countriesAndTerritories AS country_name,
+    COVID19CASESANDDEATHS.dateRep AS date,
+    COVID19CASESANDDEATHS.cases AS number_of_cases,
+    COVID19CASESANDDEATHS.deaths AS number_of_deaths
+FROM
+    COVID19CASESANDDEATHS
+JOIN
+    COUNTRYIDS ON COVID19CASESANDDEATHS.countryterritoryCode = COUNTRYIDS.countryterritoryCode
+JOIN COUNTRYNAMES ON COUNTRYIDS.geoID = COUNTRYNAMES.geoID
+ORDER BY
+    substr(dateRep, 7, 4) || '/' || substr(dateRep, 4, 2) || '/' || substr(dateRep, 1, 2),
+    COUNTRYNAMES.countriesAndTerritories;
+\end{verbatim}
+
+\subsection{EX17}
+Calculates percentage of cases in terms of entire population of a country, and does the same for deaths. Presents this for every country in the database. 
+\begin{verbatim}
+SELECT COUNTRYNAMES.countriesAndTerritories AS country, ROUND(SUM(cases)*1.0/popData2020*100, 2) 
+    AS casespercentageofpop, ROUND(SUM(deaths)*1.0/popData2020*100, 2) AS deathaspercentageofpop
+FROM COVID19CASESANDDEATHS
+JOIN COUNTRYIDS ON COVID19CASESANDDEATHS.countryterritoryCode = COUNTRYIDS.countryterritoryCode
+JOIN COUNTRYNAMES ON COUNTRYIDS.geoID = COUNTRYNAMES.geoID
+JOIN POPULATION ON COUNTRYNAMES.countriesAndTerritories = POPULATION.countriesAndTerritories
+GROUP BY
+    COUNTRYNAMES.countriesAndTerritories;
+
+\end{verbatim}
+
+\subsection{EX18}
+Calculates the deaths out of the population for each country, orders the percentages in descending order, and presents the top 10. 
+\begin{verbatim}
+SELECT COUNTRYNAMES.countriesAndTerritories AS countries, ROUND(SUM(CAST(deaths AS 
+    FLOAT))/SUM(CAST(cases AS FLOAT))*100,2) AS percentdeathsofcountrycases
+FROM COVID19CASESANDDEATHS
+LEFT JOIN COUNTRYIDS ON COVID19CASESANDDEATHS.countryterritoryCode = 
+    COUNTRYIDS.countryterritoryCode
+LEFT JOIN COUNTRYNAMES ON COUNTRYIDS.geoID = COUNTRYNAMES.geoID
+GROUP BY COUNTRYNAMES.countriesAndTerritories
+ORDER BY percentdeathsofcountrycases DESC
+LIMIT 10;
+
+\end{verbatim}
+Gets the cumulative total of cases and deaths for the UK only by adding the count to the row before.
+\subsection{EX19}
+\begin{verbatim}
+SELECT dateRep,
+SUM(deaths) OVER (ROWS UNBOUNDED PRECEDING) AS cumulative_UK_deaths,
+SUM(cases) OVER (ROWS UNBOUNDED PRECEDING) AS cumulative_UK_cases
+FROM COVID19CASESANDDEATHS
+WHERE countryterritoryCode = 'GBR';
+\end{verbatim}
+
+
+
+
+
+\end{document}

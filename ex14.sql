@@ -1,0 +1,1 @@
+SELECT SUM(CAST(cases AS INTEGER)) as total_cases, SUM(CAST(deaths AS INTEGER)) as total_deaths FROM COVID19CASESANDDEATHS;
